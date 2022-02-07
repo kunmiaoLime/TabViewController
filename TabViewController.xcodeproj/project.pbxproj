@@ -13,9 +13,12 @@
 		6EDC969927B1A08D00A28856 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EDC969727B1A08D00A28856 /* Main.storyboard */; };
 		6EDC969B27B1A09100A28856 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EDC969A27B1A09100A28856 /* Assets.xcassets */; };
 		6EDC969E27B1A09100A28856 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EDC969C27B1A09100A28856 /* LaunchScreen.storyboard */; };
+		F7BE3F4745ABCFA18F21628A /* Pods_TabViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527CF4B9076875236F5CA8B0 /* Pods_TabViewController.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0DF0DDD77979228D0C5B048B /* Pods-TabViewController.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabViewController.release.xcconfig"; path = "Target Support Files/Pods-TabViewController/Pods-TabViewController.release.xcconfig"; sourceTree = "<group>"; };
+		527CF4B9076875236F5CA8B0 /* Pods_TabViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TabViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EDC968E27B1A08D00A28856 /* TabViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EDC969127B1A08D00A28856 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EDC969327B1A08D00A28856 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +27,7 @@
 		6EDC969A27B1A09100A28856 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6EDC969D27B1A09100A28856 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6EDC969F27B1A09100A28856 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D171B5F37972F3F8E2D37F7F /* Pods-TabViewController.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabViewController.debug.xcconfig"; path = "Target Support Files/Pods-TabViewController/Pods-TabViewController.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7BE3F4745ABCFA18F21628A /* Pods_TabViewController.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +47,8 @@
 			children = (
 				6EDC969027B1A08D00A28856 /* TabViewController */,
 				6EDC968F27B1A08D00A28856 /* Products */,
+				BD0B66FDC0F686E6C722BC28 /* Pods */,
+				EBB7B4D2E490079299503DE2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +74,24 @@
 			path = TabViewController;
 			sourceTree = "<group>";
 		};
+		BD0B66FDC0F686E6C722BC28 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D171B5F37972F3F8E2D37F7F /* Pods-TabViewController.debug.xcconfig */,
+				0DF0DDD77979228D0C5B048B /* Pods-TabViewController.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		EBB7B4D2E490079299503DE2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				527CF4B9076875236F5CA8B0 /* Pods_TabViewController.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -74,9 +99,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6EDC96A227B1A09100A28856 /* Build configuration list for PBXNativeTarget "TabViewController" */;
 			buildPhases = (
+				E9CF8AB574C276880A0365B5 /* [CP] Check Pods Manifest.lock */,
 				6EDC968A27B1A08D00A28856 /* Sources */,
 				6EDC968B27B1A08D00A28856 /* Frameworks */,
 				6EDC968C27B1A08D00A28856 /* Resources */,
+				2EEDD20F9FC258EEC1E8BFD1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -132,6 +159,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2EEDD20F9FC258EEC1E8BFD1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TabViewController/Pods-TabViewController-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TabViewController/Pods-TabViewController-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TabViewController/Pods-TabViewController-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E9CF8AB574C276880A0365B5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TabViewController-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6EDC968A27B1A08D00A28856 /* Sources */ = {
@@ -284,6 +353,7 @@
 		};
 		6EDC96A327B1A09100A28856 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D171B5F37972F3F8E2D37F7F /* Pods-TabViewController.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -312,6 +382,7 @@
 		};
 		6EDC96A427B1A09100A28856 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0DF0DDD77979228D0C5B048B /* Pods-TabViewController.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
