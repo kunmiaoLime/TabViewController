@@ -19,7 +19,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard let ws = (scene as? UIWindowScene) else { return }
     let window = UIWindow(windowScene: ws)
     self.window = window
-    window.rootViewController = TabViewController()
+    let children: [ChildViewController] = [
+      .init(title: "Red", bgColor: .red),
+      .init(title: "Green", bgColor: .green),
+      .init(title: "Blue", bgColor: .blue)
+    ]
+    window.rootViewController = TabViewController(tabViews: children)
     window.makeKeyAndVisible()
   }
 

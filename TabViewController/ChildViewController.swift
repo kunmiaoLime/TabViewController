@@ -8,20 +8,25 @@
 import SnapKit
 import UIKit
 
-class ChildViewController: UIViewController {
-  let titleView = UILabel()
+class ChildViewController: UIViewController, UITabViewable {
+  var tabTitle: String = "Tab Name"
+  var bgColor: UIColor? {
+    didSet {
+      view.backgroundColor = bgColor
+    }
+  }
 
-  var titleText: String? {
-    get { titleView.text }
-    set { titleView.text = newValue }
+  init(title: String, bgColor: UIColor) {
+    self.tabTitle = title
+    self.bgColor = bgColor
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    view.addSubview(titleView)
-    titleView.snp.makeConstraints { make in
-      make.top.leading.trailing.equalToSuperview()
-    }
   }
 }
