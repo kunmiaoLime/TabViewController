@@ -7,7 +7,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class TabViewController: UIPageViewController {
+
+  var tabs: [UIViewController] = []
 
   override func viewDidLoad() {
     super.viewDidLoad()

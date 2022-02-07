@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		6EDC969227B1A08D00A28856 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDC969127B1A08D00A28856 /* AppDelegate.swift */; };
 		6EDC969427B1A08D00A28856 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDC969327B1A08D00A28856 /* SceneDelegate.swift */; };
-		6EDC969627B1A08D00A28856 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDC969527B1A08D00A28856 /* ViewController.swift */; };
+		6EDC969627B1A08D00A28856 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDC969527B1A08D00A28856 /* TabViewController.swift */; };
 		6EDC969927B1A08D00A28856 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EDC969727B1A08D00A28856 /* Main.storyboard */; };
 		6EDC969B27B1A09100A28856 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6EDC969A27B1A09100A28856 /* Assets.xcassets */; };
 		6EDC969E27B1A09100A28856 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EDC969C27B1A09100A28856 /* LaunchScreen.storyboard */; };
+		6EDC96A627B1A36E00A28856 /* ChildViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDC96A527B1A36E00A28856 /* ChildViewController.swift */; };
 		F7BE3F4745ABCFA18F21628A /* Pods_TabViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527CF4B9076875236F5CA8B0 /* Pods_TabViewController.framework */; };
 /* End PBXBuildFile section */
 
@@ -22,11 +23,12 @@
 		6EDC968E27B1A08D00A28856 /* TabViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EDC969127B1A08D00A28856 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EDC969327B1A08D00A28856 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6EDC969527B1A08D00A28856 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		6EDC969527B1A08D00A28856 /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
 		6EDC969827B1A08D00A28856 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6EDC969A27B1A09100A28856 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6EDC969D27B1A09100A28856 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6EDC969F27B1A09100A28856 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6EDC96A527B1A36E00A28856 /* ChildViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildViewController.swift; sourceTree = "<group>"; };
 		D171B5F37972F3F8E2D37F7F /* Pods-TabViewController.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabViewController.debug.xcconfig"; path = "Target Support Files/Pods-TabViewController/Pods-TabViewController.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -65,11 +67,12 @@
 			children = (
 				6EDC969127B1A08D00A28856 /* AppDelegate.swift */,
 				6EDC969327B1A08D00A28856 /* SceneDelegate.swift */,
-				6EDC969527B1A08D00A28856 /* ViewController.swift */,
+				6EDC969527B1A08D00A28856 /* TabViewController.swift */,
 				6EDC969727B1A08D00A28856 /* Main.storyboard */,
 				6EDC969A27B1A09100A28856 /* Assets.xcassets */,
 				6EDC969C27B1A09100A28856 /* LaunchScreen.storyboard */,
 				6EDC969F27B1A09100A28856 /* Info.plist */,
+				6EDC96A527B1A36E00A28856 /* ChildViewController.swift */,
 			);
 			path = TabViewController;
 			sourceTree = "<group>";
@@ -80,7 +83,6 @@
 				D171B5F37972F3F8E2D37F7F /* Pods-TabViewController.debug.xcconfig */,
 				0DF0DDD77979228D0C5B048B /* Pods-TabViewController.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -207,7 +209,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EDC969627B1A08D00A28856 /* ViewController.swift in Sources */,
+				6EDC96A627B1A36E00A28856 /* ChildViewController.swift in Sources */,
+				6EDC969627B1A08D00A28856 /* TabViewController.swift in Sources */,
 				6EDC969227B1A08D00A28856 /* AppDelegate.swift in Sources */,
 				6EDC969427B1A08D00A28856 /* SceneDelegate.swift in Sources */,
 			);
