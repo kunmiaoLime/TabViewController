@@ -16,6 +16,7 @@ public protocol UITabViewable {
 }
 
 public protocol UITabControllable: UIScrollViewDelegate {
+  var titles: [String] { get set }
   var listener: TabControlListener? { get set }
 }
 
@@ -51,11 +52,7 @@ open class TabViewController: UIViewController {
   }
 
   required public init?(coder: NSCoder) {
-    self.indexRelay = .init(value: .init(prev: 0, current: 0))
-    self.indexObservable = indexRelay.distinctUntilChanged()
-    self.tabViews = []
-    self.tabController = ButtonBarTabController()
-    super.init(coder: coder)
+    fatalError("init(coder:) has not been implemented")
   }
 
   open override func viewDidLoad() {
@@ -68,22 +65,23 @@ open class TabViewController: UIViewController {
     setupTabConstraints()
   }
 
-  // Override this to configure tab bar frame
-  open func tabBarFrame() -> CGRect {
-    return .init(x: 0, y: 0, width: view.frame.width, height: 100)
-  }
-
   // MARK: - setupUI
   private func setupUI() {
+    setupView()
     setupTabController()
     setupTabContenView()
     setupConstraints()
   }
 
+  private func setupView() {
+    view.backgroundColor = .white
+  }
+
   private func setupTabController() {
     view.addSubview(tabController)
     tabController.listener = self
-    tabController.backgroundColor = .yellow
+//    tabController.titles = tabViews.map { $0.tabTitle }
+    tabController.backgroundColor = .clear
   }
 
   private func setupTabContenView() {
@@ -93,7 +91,7 @@ open class TabViewController: UIViewController {
     tabContentView.clipsToBounds = true
     tabContentView.showsHorizontalScrollIndicator = false
     tabContentView.isPagingEnabled = true
-    let barFrame = tabBarFrame()
+    let barFrame = tabController.frame
     tabContentView.contentSize = .init(width: view.frame.width * CGFloat(count),
                                        height: view.frame.height - barFrame.height - barFrame.minY)
     tabContentView.backgroundColor = .cyan
@@ -112,8 +110,10 @@ open class TabViewController: UIViewController {
 
   private func setupConstraints() {
     tabController.snp.makeConstraints { make in
-      make.leading.trailing.top.equalToSuperview()
-      make.height.equalTo(tabBarFrame().height)
+      let frame = tabController.frame
+      make.leading.equalToSuperview().offset(frame.minX)
+      make.top.equalToSuperview().offset(frame.minY)
+      make.size.equalTo(frame.size)
     }
 
     tabContentView.snp.makeConstraints { make in

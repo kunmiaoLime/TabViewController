@@ -24,8 +24,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       .init(title: "Green", bgColor: .green),
       .init(title: "Blue", bgColor: .blue)
     ]
+
+    let controller = ButtonBarTabController(
+      titles: children.map { $0.tabTitle },
+      frame: .init(x: 16, y: 0, width: window.frame.width - 32, height: 100)
+    )
     window.rootViewController = TabViewController(tabViews: children,
-                                                  tabController: ButtonBarTabController())
+                                                  tabController: controller)
     window.makeKeyAndVisible()
   }
 
