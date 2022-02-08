@@ -13,7 +13,7 @@ protocol UITabViewable {
   var tabTitle: String { get set }
 }
 
-class TabViewController: UIViewController {
+open class TabViewController: UIViewController {
   let tabButtonView = UIView()
   let tabContentView = UIScrollView()
   var tabViews: [UITabViewable]
@@ -27,19 +27,24 @@ class TabViewController: UIViewController {
     super.init(nibName: nil, bundle: nil)
   }
 
-  required init?(coder: NSCoder) {
+  required public init?(coder: NSCoder) {
     self.tabViews = []
     super.init(coder: coder)
   }
 
-  override func viewDidLoad() {
+  open override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
   }
 
-  override func viewDidLayoutSubviews() {
+  open override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
     setupTabConstraints()
+  }
+
+  // Override this to configure tab bar frame
+  open func tabBarFrame() -> CGRect {
+    return .init(x: 0, y: 0, width: view.frame.width, height: 100)
   }
 
   // MARK: - setupUI
@@ -61,8 +66,9 @@ class TabViewController: UIViewController {
     tabContentView.clipsToBounds = true
     tabContentView.showsHorizontalScrollIndicator = false
     tabContentView.isPagingEnabled = true
+    let barFrame = tabBarFrame()
     tabContentView.contentSize = .init(width: view.frame.width * CGFloat(count),
-                                       height: view.frame.height - 100)
+                                       height: view.frame.height - barFrame.height - barFrame.minY)
     tabContentView.backgroundColor = .cyan
 
     for tabView in tabViews {
@@ -75,7 +81,7 @@ class TabViewController: UIViewController {
   private func setupConstraints() {
     tabButtonView.snp.makeConstraints { make in
       make.leading.trailing.top.equalToSuperview()
-      make.height.equalTo(100)
+      make.height.equalTo(tabBarFrame().height)
     }
 
     tabContentView.snp.makeConstraints { make in
