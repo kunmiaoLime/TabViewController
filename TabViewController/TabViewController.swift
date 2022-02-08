@@ -16,7 +16,11 @@ protocol UITabViewable {
 }
 
 protocol UITabControllable: UIScrollViewDelegate {
+  var listener: TabControlListener? { get set }
+}
 
+protocol TabControlListener: AnyObject {
+  func scroll(to index: Int, animated: Bool)
 }
 
 open class TabViewController: UIViewController {
@@ -68,13 +72,14 @@ open class TabViewController: UIViewController {
 
   // MARK: - setupUI
   private func setupUI() {
-    setupTabButtonView()
+    setupTabController()
     setupTabContenView()
     setupConstraints()
   }
 
-  private func setupTabButtonView() {
+  private func setupTabController() {
     view.addSubview(tabController)
+    tabController.listener = self
     tabController.backgroundColor = .yellow
   }
 
@@ -95,6 +100,7 @@ open class TabViewController: UIViewController {
     }
 
     indexObservable.subscribe(onNext: { indexChange in
+      guard indexChange.prev != indexChange.current else { return }
       print("Prev: \(indexChange.prev), Current: \(indexChange.current)")
     }).disposed(by: disposeBag)
   }
@@ -140,3 +146,13 @@ extension TabViewController: UIScrollViewDelegate {
   }
 }
 
+// MARK: - TabContentScrollable
+
+extension TabViewController: TabControlListener {
+  func scroll(to index: Int, animated: Bool = true) {
+    guard index >= 0 && index < count else { return }
+    let size = tabContentView.frame.size
+    let frame = CGRect(origin: .init(x: CGFloat(index) * size.width, y: 0), size: size)
+    tabContentView.scrollRectToVisible(frame, animated: animated)
+  }
+}

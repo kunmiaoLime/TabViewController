@@ -7,5 +7,10 @@
 
 import UIKit
 
-class ButtonBarTabController: UIControl, UITabControllable {
+public final class ButtonBarTabController: UIControl {
+  weak var listener: TabControlListener?
 }
+
+// MARK: - UITabControllable
+
+extension ButtonBarTabController: UITabControllable {}
