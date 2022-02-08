@@ -7,5 +7,7 @@ target 'TabViewController' do
 
   # Pods for TabViewController
   pod 'SnapKit'
+  pod 'RxCocoa'
+  pod 'RxSwift'
 
 end

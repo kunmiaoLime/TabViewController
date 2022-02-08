@@ -5,6 +5,8 @@
 //  Created by Kunmiao Yang on 2/7/22.
 //
 
+import RxRelay
+import RxSwift
 import SnapKit
 import UIKit
 
@@ -19,6 +21,14 @@ protocol UITabControllable: UIScrollViewDelegate {
 
 open class TabViewController: UIViewController {
   typealias UITabControl = UIControl & UITabControllable
+  public struct IndexChange: Equatable {
+    let prev: Int
+    let current: Int
+  }
+
+  private let indexRelay: BehaviorRelay<IndexChange>
+  private let disposeBag = DisposeBag()
+  let indexObservable: Observable<IndexChange>
   let tabController: UITabControl = ButtonBarTabController()
   let tabContentView = UIScrollView()
   var tabViews: [UITabViewable]
@@ -28,11 +38,15 @@ open class TabViewController: UIViewController {
   }
 
   init(tabViews: [UITabViewable]) {
+    self.indexRelay = .init(value: .init(prev: 0, current: 0))
+    self.indexObservable = indexRelay.distinctUntilChanged()
     self.tabViews = tabViews
     super.init(nibName: nil, bundle: nil)
   }
 
   required public init?(coder: NSCoder) {
+    self.indexRelay = .init(value: .init(prev: 0, current: 0))
+    self.indexObservable = indexRelay.distinctUntilChanged()
     self.tabViews = []
     super.init(coder: coder)
   }
@@ -79,6 +93,10 @@ open class TabViewController: UIViewController {
     for tabView in tabViews {
       tabContentView.addSubview(tabView.view)
     }
+
+    indexObservable.subscribe(onNext: { indexChange in
+      print("Prev: \(indexChange.prev), Current: \(indexChange.current)")
+    }).disposed(by: disposeBag)
   }
 
   // MARK: - setupConstraints
@@ -111,8 +129,14 @@ open class TabViewController: UIViewController {
 extension TabViewController: UIScrollViewDelegate {
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     tabController.scrollViewDidScroll?(scrollView)
-    let pos = Int(round(scrollView.contentOffset.x / view.frame.width))
-    print(pos)
+  }
+
+  public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    let index = Int(round(scrollView.contentOffset.x / view.frame.width))
+    let prevIndex = indexRelay.value.current
+    if prevIndex != index {
+      indexRelay.accept(.init(prev: prevIndex, current: index))
+    }
   }
 }
 
