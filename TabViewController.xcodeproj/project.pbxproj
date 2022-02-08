@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E3F274327B2039C00FF7883 /* ButtonBarTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E3F274227B2039C00FF7883 /* ButtonBarTabController.swift */; };
 		6EDC969227B1A08D00A28856 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDC969127B1A08D00A28856 /* AppDelegate.swift */; };
 		6EDC969427B1A08D00A28856 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDC969327B1A08D00A28856 /* SceneDelegate.swift */; };
 		6EDC969627B1A08D00A28856 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDC969527B1A08D00A28856 /* TabViewController.swift */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		0DF0DDD77979228D0C5B048B /* Pods-TabViewController.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabViewController.release.xcconfig"; path = "Target Support Files/Pods-TabViewController/Pods-TabViewController.release.xcconfig"; sourceTree = "<group>"; };
 		527CF4B9076875236F5CA8B0 /* Pods_TabViewController.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TabViewController.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E3F274227B2039C00FF7883 /* ButtonBarTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonBarTabController.swift; sourceTree = "<group>"; };
 		6EDC968E27B1A08D00A28856 /* TabViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EDC969127B1A08D00A28856 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6EDC969327B1A08D00A28856 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 				6EDC969C27B1A09100A28856 /* LaunchScreen.storyboard */,
 				6EDC969F27B1A09100A28856 /* Info.plist */,
 				6EDC96A527B1A36E00A28856 /* ChildViewController.swift */,
+				6E3F274227B2039C00FF7883 /* ButtonBarTabController.swift */,
 			);
 			path = TabViewController;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 			files = (
 				6EDC96A627B1A36E00A28856 /* ChildViewController.swift in Sources */,
 				6EDC969627B1A08D00A28856 /* TabViewController.swift in Sources */,
+				6E3F274327B2039C00FF7883 /* ButtonBarTabController.swift in Sources */,
 				6EDC969227B1A08D00A28856 /* AppDelegate.swift in Sources */,
 				6EDC969427B1A08D00A28856 /* SceneDelegate.swift in Sources */,
 			);

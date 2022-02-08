@@ -13,8 +13,13 @@ protocol UITabViewable {
   var tabTitle: String { get set }
 }
 
+protocol UITabControllable: UIScrollViewDelegate {
+
+}
+
 open class TabViewController: UIViewController {
-  let tabButtonView = UIView()
+  typealias UITabControl = UIControl & UITabControllable
+  let tabController: UITabControl = ButtonBarTabController()
   let tabContentView = UIScrollView()
   var tabViews: [UITabViewable]
 
@@ -55,8 +60,8 @@ open class TabViewController: UIViewController {
   }
 
   private func setupTabButtonView() {
-    view.addSubview(tabButtonView)
-    tabButtonView.backgroundColor = .yellow
+    view.addSubview(tabController)
+    tabController.backgroundColor = .yellow
   }
 
   private func setupTabContenView() {
@@ -79,14 +84,14 @@ open class TabViewController: UIViewController {
   // MARK: - setupConstraints
 
   private func setupConstraints() {
-    tabButtonView.snp.makeConstraints { make in
+    tabController.snp.makeConstraints { make in
       make.leading.trailing.top.equalToSuperview()
       make.height.equalTo(tabBarFrame().height)
     }
 
     tabContentView.snp.makeConstraints { make in
       make.leading.trailing.bottom.equalToSuperview()
-      make.top.equalTo(tabButtonView.snp.bottom)
+      make.top.equalTo(tabController.snp.bottom)
     }
   }
 
@@ -103,5 +108,11 @@ open class TabViewController: UIViewController {
 
 // MARK: - UIScrollViewDelegate
 
-extension TabViewController: UIScrollViewDelegate {}
+extension TabViewController: UIScrollViewDelegate {
+  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    tabController.scrollViewDidScroll?(scrollView)
+    let pos = Int(round(scrollView.contentOffset.x / view.frame.width))
+    print(pos)
+  }
+}
 
