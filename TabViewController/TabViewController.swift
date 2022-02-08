@@ -10,21 +10,21 @@ import RxSwift
 import SnapKit
 import UIKit
 
-protocol UITabViewable {
+public protocol UITabViewable {
   var view: UIView! { get set }
   var tabTitle: String { get set }
 }
 
-protocol UITabControllable: UIScrollViewDelegate {
+public protocol UITabControllable: UIScrollViewDelegate {
   var listener: TabControlListener? { get set }
 }
 
-protocol TabControlListener: AnyObject {
+public protocol TabControlListener: AnyObject {
   func scroll(to index: Int, animated: Bool)
 }
 
 open class TabViewController: UIViewController {
-  typealias UITabControl = UIControl & UITabControllable
+  public typealias UITabControl = UIControl & UITabControllable
   public struct IndexChange: Equatable {
     let prev: Int
     let current: Int
@@ -33,7 +33,7 @@ open class TabViewController: UIViewController {
   private let indexRelay: BehaviorRelay<IndexChange>
   private let disposeBag = DisposeBag()
   let indexObservable: Observable<IndexChange>
-  let tabController: UITabControl = ButtonBarTabController()
+  let tabController: UITabControl
   let tabContentView = UIScrollView()
   var tabViews: [UITabViewable]
 
@@ -41,10 +41,12 @@ open class TabViewController: UIViewController {
     tabViews.count
   }
 
-  init(tabViews: [UITabViewable]) {
+  public init(tabViews: [UITabViewable],
+              tabController: UITabControl) {
     self.indexRelay = .init(value: .init(prev: 0, current: 0))
     self.indexObservable = indexRelay.distinctUntilChanged()
     self.tabViews = tabViews
+    self.tabController = tabController
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -52,6 +54,7 @@ open class TabViewController: UIViewController {
     self.indexRelay = .init(value: .init(prev: 0, current: 0))
     self.indexObservable = indexRelay.distinctUntilChanged()
     self.tabViews = []
+    self.tabController = ButtonBarTabController()
     super.init(coder: coder)
   }
 
@@ -149,7 +152,7 @@ extension TabViewController: UIScrollViewDelegate {
 // MARK: - TabContentScrollable
 
 extension TabViewController: TabControlListener {
-  func scroll(to index: Int, animated: Bool = true) {
+  public func scroll(to index: Int, animated: Bool = true) {
     guard index >= 0 && index < count else { return }
     let size = tabContentView.frame.size
     let frame = CGRect(origin: .init(x: CGFloat(index) * size.width, y: 0), size: size)

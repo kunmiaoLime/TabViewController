@@ -8,9 +8,13 @@
 import UIKit
 
 public final class ButtonBarTabController: UIControl {
-  weak var listener: TabControlListener?
+  public struct Style {
+  }
+  weak public var listener: TabControlListener?
 }
 
 // MARK: - UITabControllable
 
-extension ButtonBarTabController: UITabControllable {}
+extension ButtonBarTabController: UITabControllable {
+
+}

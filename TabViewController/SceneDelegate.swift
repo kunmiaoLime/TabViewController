@@ -24,7 +24,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
       .init(title: "Green", bgColor: .green),
       .init(title: "Blue", bgColor: .blue)
     ]
-    window.rootViewController = TabViewController(tabViews: children)
+    window.rootViewController = TabViewController(tabViews: children,
+                                                  tabController: ButtonBarTabController())
     window.makeKeyAndVisible()
   }
 
