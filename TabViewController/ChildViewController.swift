@@ -28,5 +28,6 @@ class ChildViewController: UIViewController, UITabViewable {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    view.backgroundColor = bgColor
   }
 }
