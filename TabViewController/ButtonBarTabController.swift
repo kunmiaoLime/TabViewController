@@ -110,13 +110,13 @@ public final class ButtonBarTabController: UIControl {
     if scrollView.superview == nil {
       addSubview(scrollView)
     }
-    scrollView.contentSize = frame.size
   }
 
   private func setupContentView() {
     if contentView.superview == nil {
       scrollView.addSubview(contentView)
     }
+    scrollView.showsHorizontalScrollIndicator = false
   }
 
   private func setupLabels() {
@@ -211,6 +211,7 @@ public final class ButtonBarTabController: UIControl {
       width: contentWidth,
       height: scrollView.frame.height
     )
+    scrollView.contentSize = contentView.frame.size
   }
 }
 
