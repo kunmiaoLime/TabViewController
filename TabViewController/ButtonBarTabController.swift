@@ -5,6 +5,8 @@
 //  Created by Kunmiao Yang on 2/7/22.
 //
 
+import RxCocoa
+import RxSwift
 import SnapKit
 import UIKit
 
@@ -32,6 +34,7 @@ public final class ButtonBarTabController: UIControl {
   }
 
   private let constants = Constants()
+  private var titleDisposeBag = DisposeBag()
   private var animating: Bool = false
 
   public var style: Style
@@ -44,7 +47,7 @@ public final class ButtonBarTabController: UIControl {
   weak public var listener: TabControlListener?
 
   private var contentWidth: CGFloat {
-    guard !titles.isEmpty else { return 0 }
+    guard !labelViews.isEmpty else { return 0 }
     var width = labelViews[0].frame.width
     for index in 1..<count {
       width += labelViews[index].frame.width + style.buttonPadding
@@ -56,9 +59,18 @@ public final class ButtonBarTabController: UIControl {
     titles.count
   }
 
-  public var titles: [String] = [] {
+  private var titles: [String] = [] {
     didSet {
       setupUI()
+    }
+  }
+
+  public var titlesObservable: Observable<[String]> = .just([]) {
+    didSet {
+      titleDisposeBag = DisposeBag()
+      titlesObservable.subscribe(onNext: { [weak self] titles in
+        self?.titles = titles
+      }).disposed(by: titleDisposeBag)
     }
   }
 
@@ -70,9 +82,8 @@ public final class ButtonBarTabController: UIControl {
     }
   }
 
-  init(titles: [String] = [], frame: CGRect = .zero, style: Style = .init()) {
+  init(frame: CGRect = .zero, style: Style = .init()) {
     self.style = style
-    self.titles = titles
     super.init(frame: frame)
     setupUI()
   }
@@ -83,12 +94,7 @@ public final class ButtonBarTabController: UIControl {
 
   public override func layoutSubviews() {
     super.layoutSubviews()
-    contentView.frame = .init(
-      x: 0,
-      y: 0,
-      width: contentWidth,
-      height: scrollView.frame.height
-    )
+    setupContentViewConstraints()
   }
 
   // MARK: - setupUI
@@ -194,6 +200,17 @@ public final class ButtonBarTabController: UIControl {
         make.height.equalTo(style.stripHeight)
       }
     }
+
+    setupContentViewConstraints()
+  }
+
+  private func setupContentViewConstraints() {
+    contentView.frame = .init(
+      x: 0,
+      y: 0,
+      width: contentWidth,
+      height: scrollView.frame.height
+    )
   }
 }
 

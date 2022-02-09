@@ -12,11 +12,11 @@ import UIKit
 
 public protocol UITabViewable {
   var view: UIView! { get set }
-  var tabTitle: String { get set }
+  var titleObservable: Observable<String> { get }
 }
 
 public protocol UITabControllable: AnyObject {
-  var titles: [String] { get set }
+  var titlesObservable: Observable<[String]> { get set }
   var listener: TabControlListener? { get set }
   func scrollViewDidScroll(at position: CGFloat)
   func scroll(to index: Int, animated: Bool)
@@ -83,7 +83,7 @@ open class TabViewController: UIViewController {
   private func setupTabController() {
     view.addSubview(tabController)
     tabController.listener = self
-    tabController.titles = tabViews.map { $0.tabTitle }
+    tabController.titlesObservable = Observable.combineLatest(tabViews.map { $0.titleObservable.distinctUntilChanged() })
     tabController.backgroundColor = .clear
   }
 
