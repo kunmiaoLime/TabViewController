@@ -111,13 +111,6 @@ open class TabViewController: UIViewController {
 
   // MARK: - setupConstraints
   private func setupConstraints() {
-    tabController.snp.makeConstraints { make in
-      let frame = tabController.frame
-      make.leading.equalToSuperview().offset(frame.minX)
-      make.top.equalToSuperview().offset(frame.minY)
-      make.size.equalTo(frame.size)
-    }
-
     tabContentView.snp.makeConstraints { make in
       make.leading.trailing.bottom.equalToSuperview()
       make.top.equalTo(tabController.snp.bottom)
