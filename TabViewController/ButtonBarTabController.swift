@@ -32,18 +32,10 @@ public final class ButtonBarTabController: UIControl {
   }
 
   private let constants = Constants()
+  private var animating: Bool = false
+
   public var style: Style
-  public var titles: [String] = [] {
-    didSet {
-      setupUI()
-    }
-  }
-  public var currentIndex: Int = 0 {
-    didSet {
-      setupLabel(labelViews[oldValue], highlight: false)
-      setupLabel(labelViews[currentIndex], highlight: true)
-    }
-  }
+
   let contentView = UIView()
   let scrollView = UIScrollView()
   var labelViews: [UILabel] = []
@@ -60,8 +52,22 @@ public final class ButtonBarTabController: UIControl {
     return width
   }
 
-  var count: Int {
+  public var count: Int {
     titles.count
+  }
+
+  public var titles: [String] = [] {
+    didSet {
+      setupUI()
+    }
+  }
+
+  public var currentIndex: Int = 0 {
+    didSet {
+      guard currentIndex != oldValue else { return }
+      setupLabel(labelViews[oldValue], highlight: false)
+      setupLabel(labelViews[currentIndex], highlight: true)
+    }
   }
 
   init(titles: [String] = [], frame: CGRect = .zero, style: Style = .init()) {
@@ -193,26 +199,47 @@ public final class ButtonBarTabController: UIControl {
 
 // MARK: - private
 extension ButtonBarTabController {
-  private func select(index: Int, animate: Bool = true) {
+  private func select(index: Int, animated: Bool = true) {
     guard index >= 0 && index < count else { return }
     stripView.snp.remakeConstraints { make in
       make.leading.trailing.equalTo(labelViews[index])
       make.bottom.equalToSuperview()
       make.height.equalTo(style.stripHeight)
     }
-    guard animate else {
+    guard animated else {
       currentIndex = index
       contentView.layoutIfNeeded()
       return
     }
 
+    animating = true
     UIView.animate(withDuration: constants.animateDuration,
                    delay: 0,
                    options: .curveEaseInOut) {
       self.contentView.layoutIfNeeded()
     } completion: { _ in
       self.currentIndex = index
+      self.animating = false
     }
+  }
+
+  private func updateStrip(position: CGFloat) {
+    let leftIndex = Int(position)
+    guard leftIndex >= 0 && leftIndex < count else { return }
+    let rightIndex = min(count - 1, leftIndex + 1)
+    let ratio = position - CGFloat(leftIndex)
+    let leftFrame = labelViews[leftIndex].frame
+    let rightFrame = labelViews[rightIndex].frame
+    stripView.snp.remakeConstraints { make in
+      make.leading.equalToSuperview().offset(interpolate(leftValue: leftFrame.minX, rightValue: rightFrame.minX, ratio: ratio))
+      make.width.equalTo(interpolate(leftValue: leftFrame.width, rightValue: rightFrame.width, ratio: ratio))
+      make.bottom.equalToSuperview()
+      make.height.equalTo(style.stripHeight)
+    }
+  }
+
+  private func interpolate(leftValue: CGFloat, rightValue: CGFloat, ratio: CGFloat) -> CGFloat {
+    return leftValue * (1 - ratio) + rightValue * ratio
   }
 }
 
@@ -228,7 +255,16 @@ extension ButtonBarTabController {
 // MARK: - UITabControllable
 
 extension ButtonBarTabController: UITabControllable {
+  public func scroll(to index: Int, animated: Bool) {
+    guard index != currentIndex && !animating else { return }
+    select(index: index, animated: animated)
+  }
 
+  public func scrollViewDidScroll(at position: CGFloat) {
+    guard !animating else { return }
+    updateStrip(position: position)
+    currentIndex = max(0, min(count - 1, Int(round(position))))
+  }
 }
 
 public class UITapIndexGestureRecognizer: UITapGestureRecognizer {

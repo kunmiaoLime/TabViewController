@@ -15,9 +15,11 @@ public protocol UITabViewable {
   var tabTitle: String { get set }
 }
 
-public protocol UITabControllable: UIScrollViewDelegate {
+public protocol UITabControllable: AnyObject {
   var titles: [String] { get set }
   var listener: TabControlListener? { get set }
+  func scrollViewDidScroll(at position: CGFloat)
+  func scroll(to index: Int, animated: Bool)
 }
 
 public protocol TabControlListener: AnyObject {
@@ -37,6 +39,7 @@ open class TabViewController: UIViewController {
   let tabController: UITabControl
   let tabContentView = UIScrollView()
   var tabViews: [UITabViewable]
+  var synchronizePosition: Bool = false
 
   var count: Int {
     tabViews.count
@@ -135,14 +138,18 @@ open class TabViewController: UIViewController {
 // MARK: - UIScrollViewDelegate
 extension TabViewController: UIScrollViewDelegate {
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    tabController.scrollViewDidScroll?(scrollView)
-  }
-
-  public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-    let index = Int(round(scrollView.contentOffset.x / view.frame.width))
+    let pos = scrollView.contentOffset.x / view.frame.width
+    if synchronizePosition {
+      tabController.scrollViewDidScroll(at: pos)
+    }
+    let index = Int(round(pos))
     let prevIndex = indexRelay.value.current
     if prevIndex != index {
+      print("accept pos: \(pos)")
       indexRelay.accept(.init(prev: prevIndex, current: index))
+      if !synchronizePosition {
+        tabController.scroll(to: index, animated: true)
+      }
     }
   }
 }
