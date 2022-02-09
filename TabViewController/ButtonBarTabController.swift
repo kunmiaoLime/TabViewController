@@ -104,6 +104,7 @@ public final class ButtonBarTabController: UIControl {
     setupLabels()
     setupStrip()
     setupConstraints()
+    centerLabel(at: currentIndex)
   }
 
   private func setupScrollView() {
@@ -231,6 +232,7 @@ extension ButtonBarTabController {
     }
 
     animating = true
+    centerLabel(at: index, animated: animated)
     UIView.animate(withDuration: constants.animateDuration,
                    delay: 0,
                    options: .curveEaseInOut) {
@@ -239,6 +241,17 @@ extension ButtonBarTabController {
       self.currentIndex = index
       self.animating = false
     }
+  }
+
+  private func centerLabel(at index: Int, animated: Bool = true) {
+    guard currentIndex < labelViews.count,
+          scrollView.frame.width < scrollView.contentSize.width else { return }
+    let labelFrame = labelViews[index].frame
+    let maxX = scrollView.contentSize.width - scrollView.frame.width
+    var x = labelFrame.minX - (scrollView.frame.width - labelFrame.width) / 2
+    x = min(maxX, max(0, x))
+    let rect = CGRect(origin: .init(x: x, y: 0), size: scrollView.frame.size)
+    scrollView.scrollRectToVisible(rect, animated: animated)
   }
 
   private func updateStrip(position: CGFloat) {
