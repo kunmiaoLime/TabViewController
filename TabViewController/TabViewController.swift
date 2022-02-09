@@ -80,7 +80,7 @@ open class TabViewController: UIViewController {
   private func setupTabController() {
     view.addSubview(tabController)
     tabController.listener = self
-//    tabController.titles = tabViews.map { $0.tabTitle }
+    tabController.titles = tabViews.map { $0.tabTitle }
     tabController.backgroundColor = .clear
   }
 
@@ -107,7 +107,6 @@ open class TabViewController: UIViewController {
   }
 
   // MARK: - setupConstraints
-
   private func setupConstraints() {
     tabController.snp.makeConstraints { make in
       let frame = tabController.frame
@@ -134,7 +133,6 @@ open class TabViewController: UIViewController {
 }
 
 // MARK: - UIScrollViewDelegate
-
 extension TabViewController: UIScrollViewDelegate {
   public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     tabController.scrollViewDidScroll?(scrollView)
@@ -150,7 +148,6 @@ extension TabViewController: UIScrollViewDelegate {
 }
 
 // MARK: - TabContentScrollable
-
 extension TabViewController: TabControlListener {
   public func scroll(to index: Int, animated: Bool = true) {
     guard index >= 0 && index < count else { return }

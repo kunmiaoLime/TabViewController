@@ -9,6 +9,10 @@ import SnapKit
 import UIKit
 
 public final class ButtonBarTabController: UIControl {
+  private struct Constants {
+    public let animateDuration: TimeInterval = 0.3
+  }
+
   public struct Style {
     public struct Button {
       public var buttonBackgroundColor: UIColor
@@ -27,17 +31,24 @@ public final class ButtonBarTabController: UIControl {
     public var buttonHighlight: Button = .init(buttonBackgroundColor: .clear, buttonFont: .systemFont(ofSize: 16), buttonFontColor: .black)
   }
 
+  private let constants = Constants()
   public var style: Style
   public var titles: [String] = [] {
     didSet {
       setupUI()
     }
   }
-  public var currentIndex: Int = 0
+  public var currentIndex: Int = 0 {
+    didSet {
+      setupLabel(labelViews[oldValue], highlight: false)
+      setupLabel(labelViews[currentIndex], highlight: true)
+    }
+  }
   let contentView = UIView()
   let scrollView = UIScrollView()
   var labelViews: [UILabel] = []
   let stripView = UIView()
+
   weak public var listener: TabControlListener?
 
   private var contentWidth: CGFloat {
@@ -75,7 +86,6 @@ public final class ButtonBarTabController: UIControl {
   }
 
   // MARK: - setupUI
-
   private func setupUI() {
     setupScrollView()
     setupContentView()
@@ -120,14 +130,23 @@ public final class ButtonBarTabController: UIControl {
     if label.superview == nil {
       contentView.addSubview(label)
     }
-    let buttonStyle = index == currentIndex ? style.buttonHighlight : style.buttonNormal
+    setupLabel(label, highlight: index == currentIndex)
     label.text = titles[index]
-    label.backgroundColor = buttonStyle.buttonBackgroundColor
-    label.textColor = buttonStyle.buttonFontColor
-    label.font = buttonStyle.buttonFont
     label.numberOfLines = 1
     label.adjustsFontSizeToFitWidth = false
     label.sizeToFit()
+
+    let tap = UITapIndexGestureRecognizer(target: self, action: #selector(didTapLabel(sender:)))
+    tap.index = index
+    label.addGestureRecognizer(tap)
+    label.isUserInteractionEnabled = true
+  }
+
+  private func setupLabel(_ label: UILabel, highlight: Bool) {
+    let buttonStyle = highlight ? style.buttonHighlight : style.buttonNormal
+    label.backgroundColor = buttonStyle.buttonBackgroundColor
+    label.textColor = buttonStyle.buttonFontColor
+    label.font = buttonStyle.buttonFont
   }
 
   private func setupStrip() {
@@ -141,6 +160,7 @@ public final class ButtonBarTabController: UIControl {
     }
   }
 
+  // MARK: - setup constraints
   private func setupConstraints() {
     scrollView.snp.remakeConstraints { make in
       make.leading.trailing.top.bottom.equalToSuperview()
@@ -171,8 +191,46 @@ public final class ButtonBarTabController: UIControl {
   }
 }
 
+// MARK: - private
+extension ButtonBarTabController {
+  private func select(index: Int, animate: Bool = true) {
+    guard index >= 0 && index < count else { return }
+    stripView.snp.remakeConstraints { make in
+      make.leading.trailing.equalTo(labelViews[index])
+      make.bottom.equalToSuperview()
+      make.height.equalTo(style.stripHeight)
+    }
+    guard animate else {
+      currentIndex = index
+      contentView.layoutIfNeeded()
+      return
+    }
+
+    UIView.animate(withDuration: constants.animateDuration,
+                   delay: 0,
+                   options: .curveEaseInOut) {
+      self.contentView.layoutIfNeeded()
+    } completion: { _ in
+      self.currentIndex = index
+    }
+  }
+}
+
+// MARK: - @objc
+extension ButtonBarTabController {
+  @objc
+  private func didTapLabel(sender: UITapIndexGestureRecognizer) {
+    select(index: sender.index)
+    listener?.scroll(to: sender.index, animated: true)
+  }
+}
+
 // MARK: - UITabControllable
 
 extension ButtonBarTabController: UITabControllable {
 
+}
+
+public class UITapIndexGestureRecognizer: UITapGestureRecognizer {
+  var index: Int = -1
 }
